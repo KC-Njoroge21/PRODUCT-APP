@@ -10,6 +10,23 @@ const app = express();
 
 app.use(express.json());
 
+
+app.get("/api/products/:id", async (req, res) => {
+  const { id } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({success: false, message: "Invalid product ID"});
+  }
+
+  try {
+    const selectedProduct =await Product.findById(id);
+    res.status(200).json({success: true, message: "Product fetched successfully", data: selectedProduct});
+  } catch (error) {
+    res.status(500).json({success: false, message: "Failed to fetch product"});
+    console.error(error);
+  }
+})
+
 app.get("/api/products", async (req, res) => {
   try {
     const products = await Product.find();
