@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import {useProductStore} from "../store/Products.js";
 
 const CreateProduct = () => {
 
@@ -8,10 +9,15 @@ const CreateProduct = () => {
     description: "",
   })
 
-  const handleCreateProduct = (e) => {
+  const { createProduct } = useProductStore();
+  
+
+  const handleCreateProduct = async (e) => {
     e.preventDefault();
     // Handle product creation logic here
-    console.log("Product Data:", productData);
+    const {success, message} = await createProduct(productData);
+    console.log(success);
+    console.log(message);
   }
 
   return (
