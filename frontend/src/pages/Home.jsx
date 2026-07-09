@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import ProductCard from '../components/ProductCard';
+import { useProductStore } from '../store/Products';
 
 const Home = () => {
 
@@ -7,11 +8,11 @@ const Home = () => {
 
   useEffect(() => {
     getProducts();
-  }, {getProducts})
+  }, [getProducts])
 
   return (
     <section>
-      <h1>Products</h1>
+      <h1 className='text-xl font-semibold text-center'>{products.length <= 0 ? "No products available" : "Available Products"}</h1>
 
       <div>
         {
