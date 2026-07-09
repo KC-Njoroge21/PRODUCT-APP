@@ -38,4 +38,16 @@ export const useProductStore = create((set) => ({
       return { success: false, message: "Failed to create product" };
     }
   },
+  getProducts: async () => {
+    try {
+      const res = await fetch("http://localhost:5000/api/products");
+      const data = await res.json();
+      set({ products: data.data });
+      return {success: true, message:"Products fetched successfully", data: data.data};
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to fetch products");
+      return {success: false, message: "Failed to fetch products"};
+    }
+  }
 }));
