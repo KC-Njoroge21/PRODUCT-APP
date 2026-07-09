@@ -6,6 +6,7 @@ const CreateProduct = () => {
   const [productData, setProductData] = useState({
     name: "",
     price: "",
+    image: "",
     description: "",
   })
 
@@ -37,6 +38,13 @@ const CreateProduct = () => {
           <label className="font-semibold" htmlFor="price">Price</label>
           <input className="p-2 outline-0 border rounded-md" type="number" name="price" id="price" value={productData.price} onChange={(e) => {setProductData({...productData, price: e.target.value})}}/>   
         </div>
+
+         <div className="flex flex-col gap-2">
+          <label className="font-semibold" htmlFor="image">Image</label>
+          <input className="p-2 outline-0 border rounded-md" type="text" name="image" id="image" value={productData.image} onChange={(e) => {setProductData({...productData, image: e.target.value})}}/>   
+        </div>
+
+        
 
         <div className="flex flex-col gap-2 ">
           <label className="font-semibold" htmlFor="description">Description</label>
