@@ -17,7 +17,9 @@ const Home = () => {
       <div>
         {
           products.map((item, index) => {
-            <ProductCard />
+            return (
+              <ProductCard key={index} item={item} />
+            )
           })
         }
       </div>

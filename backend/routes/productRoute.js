@@ -1,9 +1,10 @@
 import express from "express";
+import Product from "../model/productModel.js";
 
 
 const router = express.Router();
 
-router.get("/api/products/:id", async (req, res) => {
+router.get("/:id", async (req, res) => {
   const { id } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -19,7 +20,7 @@ router.get("/api/products/:id", async (req, res) => {
   }
 })
 
-router.get("/api/products", async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const products = await Product.find();
     res.status(200).json({success: true, message: "Products fetched successfully", data: products});
@@ -29,7 +30,7 @@ router.get("/api/products", async (req, res) => {
   }
 })
 
-router.post("/api/products", async (req, res) => {
+router.post("/", async (req, res) => {
   const product = req.body;
 
   if (!product.name || !product.price || !product.description) {
@@ -50,7 +51,7 @@ router.post("/api/products", async (req, res) => {
 
 })
 
-router.delete("/api/products/:id", async (req, res) => {
+router.delete("/:id", async (req, res) => {
   const { id } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -66,7 +67,7 @@ router.delete("/api/products/:id", async (req, res) => {
   }
 })
 
-router.put("/api/products/:id", async (req, res) => {
+router.put("/:id", async (req, res) => {
   const { id } = req.params;
   const product = req.body;
 
