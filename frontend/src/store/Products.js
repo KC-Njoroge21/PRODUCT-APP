@@ -68,5 +68,20 @@ export const useProductStore = create((set) => ({
     })}))
     toast.success(data.message);
     return {success: true, message: "Product deleted successfully"};
+  },
+  updateProduct: async (pid, updatedProduct) => {
+    const res = await fetch (`http://localhost:5000/api/products/${pid}`);
+    const data = await res.json();
+
+    if (!data.success) {
+      toast.error(data.message);
+      return {success: false, message: data.message}
+    }
+
+    set((state) => ({products: state.products.map((product) => {
+       return product._id === pid ? data.data : product
+    })}))
+    toast.success(data.message);
+    return {success: true, message: "Product updated successfully"};
   }
 }));
