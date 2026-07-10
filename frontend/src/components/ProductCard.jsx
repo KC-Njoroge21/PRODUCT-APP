@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
 import { useProductStore } from '../store/Products';
+import Modal from './Modal';
+import { useDisclosure } from '@chakra-ui/react';
 
 
 const ProductCard = (props) => {
 
- 
+  const { isOpen, onOpen, onClose } = useDisclosure()
 
   const { deleteProduct } = useProductStore();
 
@@ -31,7 +33,9 @@ const ProductCard = (props) => {
         <button onClick={() => {handleDeleteProduct(props.item._id)}} className='bg-red-500 text-white p-2 rounded hover:bg-red-600 mt-4 font-semibold w-full cursor-pointer'>Delete</button>
       </div>
 
-      
+      <Modal isOpen={isOpen} onClose={onClose}>
+
+      </Modal>
     </div>
   )
 }
