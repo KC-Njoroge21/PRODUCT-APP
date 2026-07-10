@@ -49,5 +49,24 @@ export const useProductStore = create((set) => ({
       toast.error("Failed to fetch products");
       return {success: false, message: "Failed to fetch products"};
     }
+  },
+  deleteProduct: async (pid) => {
+    const res = await fetch(`http://localhost:5000/api/products/${pid}`, {
+      method: "DELETE"
+    });
+    const data = await res.json();
+
+    if (!data.success) {
+      toast.error(data.message);
+      return {success: false, message: data.message}
+    }
+
+    set((state) => ({products: state.products.filter((product) => {
+      return (
+        product._id !== pid
+      )
+    })}))
+    toast.success(data.message);
+    return {success: true, message: "Product deleted successfully"};
   }
 }));

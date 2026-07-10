@@ -1,6 +1,16 @@
 import React from 'react'
+import { useProductStore } from '../store/Products';
 
 const ProductCard = (props) => {
+
+  const { deleteProduct } = useProductStore();
+
+  const handleDeleteProduct = async (pid) => {
+    const { success, message } = await deleteProduct(pid)
+  }
+
+ 
+
   return (
     <div className='flex flex-col gap-2 p-4 hover:border hover:border-blue-500 rounded-md shadow-md w-1/3 min-w-70 my-4'>
       <div>
@@ -11,8 +21,8 @@ const ProductCard = (props) => {
         <h4>${props.item.price.toFixed(2)}</h4>
       </div>
       <div className='flex gap-2'>
-        <button className='bg-blue-500 text-white p-2 rounded hover:bg-blue-600 mt-4 font-semibold w-full cursor-pointer'>Edit</button>
-        <button className='bg-red-500 text-white p-2 rounded hover:bg-red-600 mt-4 font-semibold w-full cursor-pointer'>Delete</button>
+        <button onClick={} className='bg-blue-500 text-white p-2 rounded hover:bg-blue-600 mt-4 font-semibold w-full cursor-pointer'>Edit</button>
+        <button onClick={() => {handleDeleteProduct(props.item._id)}} className='bg-red-500 text-white p-2 rounded hover:bg-red-600 mt-4 font-semibold w-full cursor-pointer'>Delete</button>
       </div>
     </div>
   )
