@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import ProductCard from '../components/ProductCard';
 import { useProductStore } from '../store/Products';
-import UpdateModal from '../components/UpdateModal';
+
 
 const Home = () => {
 
@@ -17,9 +17,7 @@ const Home = () => {
   return (
     <section className=''>
 
-    {
-      isModelOpen ? <UpdateModal /> : null
-    }
+ 
 
       <h1 className='text-xl font-semibold p-2 text-center'>{products.length <= 0 ? "No products available" : "Available Products"}</h1>
 
