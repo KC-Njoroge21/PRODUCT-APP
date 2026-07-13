@@ -13,21 +13,31 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 
+
 const ProductCard = (props) => {
 
-  const [updatedProduct, setUpdatedProduct] = useState(props.item);
+  
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const { deleteProduct } = useProductStore();
+  const [updatedProduct, setUpdatedProduct] = useState(props.item);
+
+  const { deleteProduct, updateProduct } = useProductStore();
+
+
 
   const handleDeleteProduct = async (pid) => {
     const { success, message } = await deleteProduct(pid);
   };
 
+  const handleUpdateProduct = async (pid, updatedProduct) => {
+    const { success, message } = await updateProduct(pid, updatedProduct);
+    onClose();
+  }
+
   const toogleModal = () => {
     props.setIsModelOpen(!props.isModelOpen);
-  };
+  };  
 
   return (
     <div className="flex flex-col gap-2 p-4 hover:border hover:border-blue-500 rounded-md shadow-md w-1/3 min-w-70 my-4">
@@ -36,7 +46,7 @@ const ProductCard = (props) => {
       </div>
       <div>
         <h4>{props.item.name}</h4>
-        <h4>${props.item.price.toFixed(2)}</h4>
+        <h4>ksh: {props.item.price.toFixed(2)}</h4>
       </div>
       <div className="flex gap-2">
         <button
@@ -62,11 +72,7 @@ const ProductCard = (props) => {
           <ModalHeader>Update Product</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <form
-              className="p-4 flex flex-col gap-3 w-1/2 mx-auto min-w-70 rounded-lg shadow-md "
-              action=""
-              
-            >
+          
               <div className="flex flex-col gap-2 ">
                 <label className="font-semibold" htmlFor="name">
                   Name
@@ -126,20 +132,12 @@ const ProductCard = (props) => {
                    onChange={(e) => {setUpdatedProduct({...updatedProduct, description: e.target.value})}}
                 ></textarea>
               </div>
-{/* 
-              <div className="flex justify-center">
-                <button
-                  className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600 mt-4 font-semibold w-full cursor-pointer"
-                  type="submit"
-                >
-                  Update Product
-                </button>
-              </div> */}
-            </form>
+
+            
           </ModalBody>
 
           <ModalFooter >
-            <Button colorScheme='blue' mr={3} >
+            <Button onClick={() => {handleUpdateProduct(props.item._id, updatedProduct)}} colorScheme='blue' mr={3} >
               Update
             </Button>
             <Button variant='ghost' onClick={onClose}>Close</Button>

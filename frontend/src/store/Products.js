@@ -70,12 +70,12 @@ export const useProductStore = create((set) => ({
     return {success: true, message: "Product deleted successfully"};
   },
   updateProduct: async (pid, updatedProduct) => {
-    const res = await fetch (`http://localhost:5000/api/products/${pid}`, {
+    const res = await fetch(`http://localhost:5000/api/products/${pid}`, {
       method: "PUT",
       headers: {
-        "Content-Type" : "application/json"
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(updatedProduct)
+      body: JSON.stringify(updatedProduct),
     });
     const data = await res.json();
 
