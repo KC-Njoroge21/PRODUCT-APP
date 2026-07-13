@@ -77,6 +77,7 @@ const ProductCard = (props) => {
                   name="name"
                   id="name"
                   value={updatedProduct.name}
+                  onChange={(e) => {setUpdatedProduct({...updatedProduct, name: e.target.value})}}
                  
                 />
               </div>
@@ -91,6 +92,7 @@ const ProductCard = (props) => {
                   name="price"
                   id="price"
                   value={updatedProduct.price}
+                   onChange={(e) => {setUpdatedProduct({...updatedProduct, price: e.target.value})}}
                   
                 />
               </div>
@@ -105,6 +107,7 @@ const ProductCard = (props) => {
                   name="image"
                   id="image"
                   value={updatedProduct.image}
+                   onChange={(e) => {setUpdatedProduct({...updatedProduct, image: e.target.value})}}
                   
                 />
               </div>
@@ -120,6 +123,7 @@ const ProductCard = (props) => {
                   cols="30"
                   rows="5"
                   value={updatedProduct.description}
+                   onChange={(e) => {setUpdatedProduct({...updatedProduct, description: e.target.value})}}
                 ></textarea>
               </div>
 {/* 
