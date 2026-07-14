@@ -5,6 +5,7 @@ import Product from './model/productModel.js';
 import mongoose from 'mongoose';
 import productRoutes from './routes/productRoute.js';
 import cors from 'cors';
+import rateLimiter from './middleware/rateLimiter.js';
 
 dotenv.config();
 
@@ -13,6 +14,7 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 app.use(express.json());
+app.use(rateLimiter)
 
 app.use(cors({origin: 'http://localhost:5173'}));
 
