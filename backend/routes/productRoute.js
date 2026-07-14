@@ -1,5 +1,6 @@
 import express from "express";
 import Product from "../model/productModel.js";
+import mongoose from "mongoose";
 
 
 const router = express.Router();
@@ -76,8 +77,8 @@ router.put("/:id", async (req, res) => {
   }
 
   try {
-    await Product.findByIdAndUpdate(id, product, {new: true});
-    res.status(200).json({success: true, message: "Product updated successfully"});
+    const updatedProduct = await Product.findByIdAndUpdate(id, product, {new: true});
+    res.status(200).json({success: true, message: "Product updated successfully", data:updatedProduct} );
   } catch (error) {
     res.status(500).json({success: false, message: "Failed to update product"});
     console.error(error);

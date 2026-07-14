@@ -90,4 +90,4 @@ export const useProductStore = create((set) => ({
     toast.success(data.message);
     return {success: true, message: "Product updated successfully"};
   }
-}));
+})); 
