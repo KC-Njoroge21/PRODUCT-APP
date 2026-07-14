@@ -1,6 +1,7 @@
 import toast from "react-hot-toast";
 import { create } from "zustand";
 
+
 export const useProductStore = create((set) => ({
   products: [],
   setProducts: (products) => set({ products }),
@@ -43,6 +44,7 @@ export const useProductStore = create((set) => ({
       const res = await fetch("http://localhost:5000/api/products");
       const data = await res.json();
       set({ products: data.data });
+      set
       return {success: true, message:"Products fetched successfully", data: data.data};
     } catch (error) {
       console.error(error);
