@@ -1,7 +1,6 @@
 import toast from "react-hot-toast";
 import { create } from "zustand";
 
-
 export const useProductStore = create((set) => ({
   products: [],
   setProducts: (products) => set({ products }),
@@ -43,33 +42,55 @@ export const useProductStore = create((set) => ({
     try {
       const res = await fetch("http://localhost:5000/api/products");
       const data = await res.json();
-      set({ products: data.data });
-      set
-      return {success: true, message:"Products fetched successfully", data: data.data};
+
+      if (!res.ok) {
+        if (res.status === 429) {
+          return {
+            success: false,
+            status: 429,
+            message:
+              data.message || "Too many requests. Please try again later.",
+          };
+        }
+
+        toast.error(data.message || "Failed to fetch products");
+        return {
+          success: false,
+          status: res.status,
+          message: data.message || "Failed to fetch products",
+        };
+      }
+
+      set({ products: data.data || [] });
+      return {
+        success: true,
+        message: "Products fetched successfully",
+        data: data.data,
+      };
     } catch (error) {
       console.error(error);
       toast.error("Failed to fetch products");
-      return {success: false, message: "Failed to fetch products"};
+      return { success: false, message: "Failed to fetch products" };
     }
   },
   deleteProduct: async (pid) => {
     const res = await fetch(`http://localhost:5000/api/products/${pid}`, {
-      method: "DELETE"
+      method: "DELETE",
     });
     const data = await res.json();
 
     if (!data.success) {
       toast.error(data.message);
-      return {success: false, message: data.message}
+      return { success: false, message: data.message };
     }
 
-    set((state) => ({products: state.products.filter((product) => {
-      return (
-        product._id !== pid
-      )
-    })}))
+    set((state) => ({
+      products: state.products.filter((product) => {
+        return product._id !== pid;
+      }),
+    }));
     toast.success(data.message);
-    return {success: true, message: "Product deleted successfully"};
+    return { success: true, message: "Product deleted successfully" };
   },
   updateProduct: async (pid, updatedProduct) => {
     const res = await fetch(`http://localhost:5000/api/products/${pid}`, {
@@ -83,13 +104,15 @@ export const useProductStore = create((set) => ({
 
     if (!data.success) {
       toast.error(data.message);
-      return {success: false, message: data.message}
+      return { success: false, message: data.message };
     }
 
-    set((state) => ({products: state.products.map((product) => {
-       return product._id === pid ? data.data : product
-    })}))
+    set((state) => ({
+      products: state.products.map((product) => {
+        return product._id === pid ? data.data : product;
+      }),
+    }));
     toast.success(data.message);
-    return {success: true, message: "Product updated successfully"};
-  }
-})); 
+    return { success: true, message: "Product updated successfully" };
+  },
+}));

@@ -8,14 +8,22 @@ const Home = () => {
 
    const [isModelOpen, setIsModelOpen] = useState(false);
 
-     const [rateLimited, setRateLimited] = useState(true)
+     const [rateLimited, setRateLimited] = useState(false)
 
 
   const { products, getProducts } = useProductStore(); 
 
   useEffect(() => {
-    getProducts();
-  }, [getProducts])
+  const load = async () => {
+    const result = await getProducts()
+    if (!result.success && result.status === 429) {
+      setRateLimited(true)
+    } else {
+      setRateLimited(false)
+    }
+  }
+  load()
+}, [getProducts])
 
   return (
     <section className=''>
