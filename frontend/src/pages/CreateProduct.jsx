@@ -52,7 +52,7 @@ const CreateProduct = () => {
         </div>
 
         <div className="flex justify-center">
-          <button className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600 mt-4 font-semibold w-full cursor-pointer" type="submit">Create Product</button>
+          <button className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600 mt-4 font-semibold w-full cursor-pointer">Create Product</button>
         </div>
       </form>
     </section>
